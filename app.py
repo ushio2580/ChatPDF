@@ -9,22 +9,16 @@ from langchain.embedding.openai import OpenAIEmbeddings
 from langchain.vextorstores import FAISS
 from langchain.llms import OpenAI
 from langchain.chains.question_answering import load_qa_chain
-from langChain.callbacks import get_openai_callback
+from langchain.callbacks import get_openai_callback
 
-'''import pandas as pd
-from langchain.llms import OpenAI
-from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain
-from langchain.chains.question_answering import load_qa_chain
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.document_loaders import TextLoader'''
 
 #Sidebar content
 with st.sidebar:
     st.title("Streamlit Langchain App")
-    st.markdown('''**This is a simple Streamlit app that uses Langchain to answer questions based on a given text.**')
-    st.markdown('---')
-    st.subheader('About')'' 
+    st.markdown('''
+    
+                **This is a simple Streamlit app that uses Langchain to answer questions based on a given text.
+   
                 
                 
                 
@@ -62,17 +56,17 @@ with st.sidebar:
                 chunck_overlap=200,
                 length_function=len
             )    
-            chunks=text_splitter.split_text(text_text)
+        chunks=text_splitter.split_text(text_text)
 
 
         
-            store_name=pdf.name[:-4]
+        store_name=pdf.name[:-4]
 
-            if  os.path.exist(f"{store_name}.pkl","wb"):
+        if  os.path.exist(f"{store_name}.pkl","wb"):
                 with open(f"{store_name}.pkl","wb","rb") as f:
                     VectorStore=pickle.load(f)
                # st.write("Embedding loaded from the disk")    
-            else: 
+        else: 
                     #embeddings
                 embeddings=OpenAIEmbeddings()
 
@@ -83,18 +77,19 @@ with st.sidebar:
                #  st.write("Embeding computation complete")      
 
             #Accept user question
-            query=st.text_input("ask question about your PDF file:")
-            st.write(query)
+        query=st.text_input("ask question about your PDF file:")
+           # st.write(query)
 
 
-            if query:
-                docs=VectorStore.similarity_search(query=query,k=3)
-                llm=OpenAI(model_name='gpt-3.5-turbo')
+        if query:
+            docs=VectorStore.similarity_search(query=query,k=3)
 
-                chain-load_qa_chain(llm=llm,chain_type="stuff")
-                with get_openai_callback() as cb:
-                     response=chain.run(input_documents=docs,question=query)
-                     print(cb)
+            llm=OpenAI(model_name='gpt-3.5-turbo')
+
+            chain=load_qa_chain(llm=llm,chain_type="stuff")
+            with get_openai_callback() as cb:
+                response=chain.run(input_documents=docs,question=query)
+                print(cb)
 
                 st.write(response)
                 
