@@ -50,10 +50,10 @@ def main():
 
         for page in pdf_reader.pages:
             text += page.extract_text()
-        text_splitter=RecursiveCharacterTextSplitter(
-                chunck_size=1000,
-                chunck_overlap=200,
-                length_function=len
+        text_splitter = RecursiveCharacterTextSplitter(
+            chunk_size=1000,
+            chunk_overlap=200,
+            length_function=len
             )    
         chunks=text_splitter.split_text(text=text)
 
@@ -61,20 +61,19 @@ def main():
         
         store_name=pdf.name[:-4]
 
-        if  os.path.exist(f"{store_name}.pkl"):
+        if  os.path.exists(f"{store_name}.pkl"):
                 with open(f"{store_name}.pkl","rb") as f:
-                    VectorStore=pickle.load(f)
+                    VectorStore = pickle.load(f)
                # st.write("Embedding loaded from the disk")    
         else: 
                     
             
             #embeddings
-      
-                embeddings = OpenAIEmbeddings()
+            embeddings = OpenAIEmbeddings()
             #vector store
-                VectorStore = FAISS.from_texts(chunks,embedding=embeddings)       
-                with open(f"{store_name}.pkl","wb") as f:
-                    pickle.dump(VectorStore,f)
+            VectorStore = FAISS.from_texts(chunks,embedding=embeddings)       
+            with open(f"{store_name}.pkl","wb") as f:
+                pickle.dump(VectorStore,f)
                #  st.write("Embeding computation complete")      
 
             #Accept user question
