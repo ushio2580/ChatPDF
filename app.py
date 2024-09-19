@@ -6,7 +6,7 @@ from PyPDF2 import PdfReader
 from streamlit_extras.add_vertical_space import add_vertical_space
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.vextorstores import FAISS
+from langchain.vectorstores import FAISS
 from langchain.llms import OpenAI
 from langchain.chains.question_answering import load_qa_chain
 from langchain.callbacks import get_openai_callback
@@ -44,7 +44,7 @@ def main():
        # st.write(pdf.name)
 
         #st.write(pdf)
-    if pdf is None:
+    if pdf is not None:
         pdf_reader = PdfReader(pdf)
         text = ""
 
