@@ -28,7 +28,7 @@ with st.sidebar:
                 
                 ''')
     add_vertical_space(5)
-    st.write('Made with ❤️ by [Anmol Patel](https://twitter.com/AnmolPatel1)')
+    st.write('Made with ❤️')
 
 load_dotenv()
 
